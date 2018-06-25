@@ -91,7 +91,7 @@ def generate_pdf(events_by_month, output):
             story.append(p)
         story.append(spacer)
        
-    doc = reportlab.platypus.SimpleDocTemplate(output, pagesize=reportlab.lib.pagesizes.letter)
+    doc = reportlab.platypus.SimpleDocTemplate(output, pagesize=reportlab.lib.pagesizes.letter, title="Family Birthdays and Anniversaries")
     doc.build(story)
     
 def main():
