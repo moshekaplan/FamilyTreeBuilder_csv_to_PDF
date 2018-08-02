@@ -45,11 +45,14 @@ def parse_input(fname):
 
     # List of birthdays
     for row in rows:
-        if row['Birth date']:
-            event = {}
-            event['date'] = datetime.datetime.strptime(row['Birth date'], "%b. %d %Y")
-            event['reason'] = "Birthday of %s (born in %s)" % (normalize_name(row), event['date'].year)
-            special_days.append(event)
+        try:
+            if row['Birth date']:
+                event = {}
+                event['date'] = datetime.datetime.strptime(row['Birth date'], "%b. %d %Y")
+                event['reason'] = "Birthday of %s (born in %s)" % (normalize_name(row), event['date'].year)
+                special_days.append(event)
+        except:
+            pass
 
     # List of anniversaries
     for row in rows:
@@ -80,16 +83,20 @@ def generate_pdf(events_by_month, output):
     p = reportlab.platypus.Paragraph("<b>Family Birthdays and Anniversaries</b>", style_title)
     story.append(p)
 
-    spacer = reportlab.platypus.Spacer(1,0.2*reportlab.lib.units.inch)
+    spacer = reportlab.platypus.KeepTogether(reportlab.platypus.Spacer(1,0.2*reportlab.lib.units.inch))
 
+    first = True
     for month_num in events_by_month.keys():
+        if first:
+            first = False
+        else:
+            story.append(spacer)
         p = reportlab.platypus.Paragraph("<font size=12><b>%s</b></font>" % calendar.month_name[month_num], style)
         story.append(p)
         for event in events_by_month[month_num]:
             event_text = "%s %s" % (event['date'].day, event['reason'])
             p = reportlab.platypus.Paragraph(event_text, style)
             story.append(p)
-        story.append(spacer)
        
     doc = reportlab.platypus.SimpleDocTemplate(output, pagesize=reportlab.lib.pagesizes.letter, title="Family Birthdays and Anniversaries")
     doc.build(story)
