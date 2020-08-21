@@ -59,7 +59,7 @@ def parse_input(fname):
         if row['Marriage date'] and row['Gender'] == 'M':
             event = {}
             event['date'] = datetime.datetime.strptime(row['Marriage date'], "%b. %d %Y")
-            event['reason'] = "Anniversary of %s and %s (married in %s)" % (row['First name'], row['Marriage to'], event['date'].year)
+            event['reason'] = "Anniversary of %s %s and %s (married in %s)" % (row['First name'], row['Last name'], row['Marriage to'], event['date'].year)
             special_days.append(event)
 
     # Group by Month:
