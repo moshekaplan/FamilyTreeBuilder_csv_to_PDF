@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Converts a MyTreeBuilder CSV report file into a PDF list of birthdays and anniversaries
+Converts a MyHeritage Family Tree Builder CSV report file into a PDF list of birthdays and anniversaries
 """
 
 import csv
