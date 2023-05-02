@@ -86,7 +86,7 @@ def generate_pdf(events_by_month, output):
     spacer = reportlab.platypus.KeepTogether(reportlab.platypus.Spacer(1,0.2*reportlab.lib.units.inch))
 
     first = True
-    for month_num in events_by_month.keys():
+    for month_num in sorted(events_by_month.keys()):
         if first:
             first = False
         else:
